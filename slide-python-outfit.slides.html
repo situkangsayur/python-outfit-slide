@@ -14709,7 +14709,92 @@ div.jp-OutputPrompt {
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="How-java-spring-integrate-with-consul-and-vault-?">How java spring integrate with consul and vault ?<a class="anchor-link" href="#How-java-spring-integrate-with-consul-and-vault-?">&#182;</a></h1>
+<h1 id="How-to-integrate-consul-and-vault-in-python-?">How to integrate consul and vault in python ?<a class="anchor-link" href="#How-to-integrate-consul-and-vault-in-python-?">&#182;</a></h1><ol>
+<li>Install hvac python client and python consul library</li>
+<li><p>for python consul :
+ {</p>
+
+<pre><code> # could use env var to load token
+ client = consul.Consul(token=token)
+
+ client.kv.get('foo')          # OK
+ client.kv.put('foo', 'bar2')  # raises ACLPermissionDenied
+
+ client.kv.get('private/foo')  # returns None, as though the key doesn't
+                               # exist - slightly unintuitive
+ client.kv.put('private/foo', 'bar2')  # raises ACLPermissionDenied
+</code></pre>
+<p>}</p>
+</li>
+</ol>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<ol>
+<li><p>for python vault :
+ {</p>
+
+<pre><code> # could use env var for the config info
+ client = hvac.Client(
+     url='https://localhost:8200',
+     token=os.environ['VAULT_TOKEN'],
+     cert=(client_cert_path, client_key_path),
+     verify=server_cert_path,
+ )
+ client.is_authenticated()
+ create_response = client.secrets.kv.v2.create_or_update_secret(
+      path='foo',
+      secret=dict(baz='bar'),
+  )
+
+  # Read the data written under path: secret/foo
+  read_response = client.secrets.kv.read_secret_version(path='foo')
+  print('Value under path "secret/foo" / key "baz": {val}'.format(
+       val=read_response['data']['data']['baz'],
+ ))
+</code></pre>
+<p>}</p>
+</li>
+</ol>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="How-java-spring-integrate-with-consul-and-vault-?">How java spring integrate with consul and vault ?<a class="anchor-link" href="#How-java-spring-integrate-with-consul-and-vault-?">&#182;</a></h1><ol>
+<li>Add spring cloud dependency</li>
+<li>Add spring.cloud.vault.<em> or spring.cloud.consul.</em> (could use yaml or .properties)</li>
+<li>create class/bean to load configuration
+done</li>
+</ol>
+
+</div>
+</div></section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Sample-bootstrap.properties-in-springboot">Sample bootstrap.properties in springboot<a class="anchor-link" href="#Sample-bootstrap.properties-in-springboot">&#182;</a></h1><p>{</p>
+
+<pre><code># Vault Configuration
+spring.cloud.vault.enabled=${VAULT_ENABLE:true}
+spring.cloud.vault.host=${VAULT_HOST:localhost}
+spring.cloud.vault.port=${VAULT_PORT:8300}
+spring.cloud.vault.fail-fast=true
+spring.cloud.vault.token=${VAULT_TOKEN}
+spring.cloud.vault.scheme=${VAULT_SCHEME:http}
+spring.cloud.vault.generic.backend=secret/config
+
+# Consul Configuration
+spring.cloud.consul.enabled=${CONSUL_ENABLE:true}
+spring.cloud.consul.host=${CONSUL_HOST:localhost}
+spring.cloud.consul.port=${CONSUL_PORT:8500}
+spring.cloud.consul.config.fail-fast=true
+spring.cloud.consul.config.format=properties
+spring.cloud.consul.config.prefix=config
+</code></pre>
+<p>}</p>
+
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14725,14 +14810,55 @@ div.jp-OutputPrompt {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="How-to-integrate-with-Consul-and-Vault-using-python-outfit-?">How to integrate with Consul and Vault using python-outfit ?<a class="anchor-link" href="#How-to-integrate-with-Consul-and-Vault-using-python-outfit-?">&#182;</a></h1><ul>
-<li>### add yaml file that contain configuration information for vault and consul that will read by python-outfit</li>
+<li>### add yaml file that contain configuration information for vault and consul that will read by python-outfit
+{
+  vault:
+<pre><code>  host: ${VAULT_HOST}
+  port: ${VAULT_PORT}
+  scheme: ${VAULT_SCHEME}
+  token: ${TOKEN_VAULT}
+  path: ${VAULT_PATH}
+</code></pre>
+  consul:
+<pre><code>  host: ${CONSUL_HOST} 
+  port: ${CONSUL_PORT}
+  scheme: ${CONSUL_SCHEME}
+  token: ${TOKEN_CONSUL}
+  path: ${CONSUL_PATH}
+</code></pre>
+  logconfig:
+<pre><code>  mode: ${LOG_MODE}
+  source_type: ${LOG_TYPE}
+  source_location: ${LOG_LOCATION} 
+  default_type: yaml_file
+  default_location: conf/logging.yaml
+</code></pre>
+}</li>
 </ul>
 
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="add-4-lines-for-load-configuration-for-consul-and-vault-data">add 4 lines for load configuration for consul and vault data<a class="anchor-link" href="#add-4-lines-for-load-configuration-for-consul-and-vault-data">&#182;</a></h3>
+<h3 id="add-5-lines-for-load-configuration-for-consul-and-vault-data">add 5 lines for load configuration for consul and vault data<a class="anchor-link" href="#add-5-lines-for-load-configuration-for-consul-and-vault-data">&#182;</a></h3><p>{
+    from outfit import Outfit
+    from outfit import ConsulCon, VaultCon
+    from outfit import Logger</p>
+
+<pre><code>if __name__ == '__main__':
+    Outfit.setup('conf/configuration.yaml')
+    con_consul = ConsulCon()
+
+    # get the information such as config file from consul kv then will be returned as python dictionary
+    config_dict = con_consul.get_kv()
+
+    con_vault = VaultCon()
+
+    # get the secret information in vault secret kv then will be returned as python dictionary
+    secret_dict = con_vault.get_secret_kv()
+</code></pre>
+<p>}</p>
+
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
