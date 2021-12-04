@@ -14637,26 +14637,29 @@ div.jp-OutputPrompt {
 <div class="slides"><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Slide-for-python-outfit">Slide for python-outfit<a class="anchor-link" href="#Slide-for-python-outfit">&#182;</a></h2><h2 id="By-Hendri-Karisma">By Hendri Karisma<a class="anchor-link" href="#By-Hendri-Karisma">&#182;</a></h2>
+<h2 id="Managing-Config-in-Python-using-Cosul-and-Vault">Managing Config in Python using Cosul and Vault<a class="anchor-link" href="#Managing-Config-in-Python-using-Cosul-and-Vault">&#182;</a></h2><h2 id="By-Hendri-Karisma">By Hendri Karisma<a class="anchor-link" href="#By-Hendri-Karisma">&#182;</a></h2>
 </div>
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><ul>
-<li>Principal Engineer at blibli.com</li>
+<li>Principal R&amp;D Engineer at blibli.com</li>
 <li>Before working in AI Squad, now working in DevEx squad</li>
-<li>using python for AI research and helping engineers for several programming laguage in DevEx</li>
+<li>using python for AI research and in DevEx: helping engineers for several programming laguages </li>
+<li>Selling food at Nevada Kitchen (home cuisine) you search and buy at blibli.com</li>
 </ul>
 
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="What-is-consul">What is consul<a class="anchor-link" href="#What-is-consul">&#182;</a></h1><h3 id="a-tool-that-help-us-to-manage-:">a tool that help us to manage :<a class="anchor-link" href="#a-tool-that-help-us-to-manage-:">&#182;</a></h3><ul>
-<li>Discovery</li>
-<li>Configuration</li>
-<li>Segmentation </li>
-</ul>
+<p><img src="images/consul.png" alt="alt"></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Service-Discovery">Service Discovery<a class="anchor-link" href="#Service-Discovery">&#182;</a></h2><p><img src="images/consul-server.jpg" alt="alt"></p>
 
 </div>
 </div></section><section>
@@ -14686,23 +14689,36 @@ div.jp-OutputPrompt {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="What-is-vault">What is vault<a class="anchor-link" href="#What-is-vault">&#182;</a></h1><h3 id="a-tool-that-help-us-to-manage-:">a tool that help us to manage :<a class="anchor-link" href="#a-tool-that-help-us-to-manage-:">&#182;</a></h3><ul>
-<li>Credential Rolling</li>
-<li></li>
-<li></li>
+<li>Secret to be Centralized with ACL</li>
+<li>Dynamic secret and unique secret for each client</li>
+<li>Protecting data with encryption feature (high leve API or encryption as a service)</li>
 </ul>
+<p>** Secret could be : username or password, app credential, api token, TLS Cert, etc</p>
 
 </div>
-</div></section><section>
+</div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Credential-Rolling">Credential Rolling<a class="anchor-link" href="#Credential-Rolling">&#182;</a></h1>
+<h1 id="Centralized-Secret">Centralized Secret<a class="anchor-link" href="#Centralized-Secret">&#182;</a></h1><p><img src="images/vaultflow.png" width="500"/></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Centralized-Secret">Centralized Secret<a class="anchor-link" href="#Centralized-Secret">&#182;</a></h1><p><img src="images/pyconvault.png" width="500"/></p>
+
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="How-python-integrate-with-consul-and-vault-?">How python integrate with consul and vault ?<a class="anchor-link" href="#How-python-integrate-with-consul-and-vault-?">&#182;</a></h1><ul>
 <li>Using different libraries for vault and consul</li>
-<li>hvac for vault client and python consul for consul</li>
+<li>hvac for vault client and python consul for consul<table alignment="left">
+  <tr>
+  <td><img src="images/pyconsul.png" width="100"/></td>
+  <td><img src="images/hvac.png" width="100"/></td>
+  </tr>
+</table></li>
 </ul>
 
 </div>
@@ -14840,7 +14856,7 @@ spring.cloud.consul.config.prefix=config
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="add-5-lines-for-load-configuration-for-consul-and-vault-data">add 5 lines for load configuration for consul and vault data<a class="anchor-link" href="#add-5-lines-for-load-configuration-for-consul-and-vault-data">&#182;</a></h3><p>{
+<h3 id="add-5-to-6-lines-for-load-configuration-for-consul-and-vault-data">add 5 to 6 lines for load configuration for consul and vault data<a class="anchor-link" href="#add-5-to-6-lines-for-load-configuration-for-consul-and-vault-data">&#182;</a></h3><p>{
     from outfit import Outfit
     from outfit import ConsulCon, VaultCon
     from outfit import Logger</p>
@@ -14856,6 +14872,9 @@ spring.cloud.consul.config.prefix=config
 
     # get the secret information in vault secret kv then will be returned as python dictionary
     secret_dict = con_vault.get_secret_kv()
+
+    # if you want to merge the vault data and consul data
+    main_config = merge_dict(config_dict, secret_dict)
 </code></pre>
 <p>}</p>
 
@@ -14875,12 +14894,18 @@ spring.cloud.consul.config.prefix=config
 </div></section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Outfit">Outfit<a class="anchor-link" href="#Outfit">&#182;</a></h2><h2 id="ConsulCon">ConsulCon<a class="anchor-link" href="#ConsulCon">&#182;</a></h2><h2 id="VaultCon">VaultCon<a class="anchor-link" href="#VaultCon">&#182;</a></h2>
-</div>
-</div></section><section>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Logger">Logger<a class="anchor-link" href="#Logger">&#182;</a></h2>
+<h2 id="Outfit">Outfit<a class="anchor-link" href="#Outfit">&#182;</a></h2>
+<pre><code>{ from outfit import Outfit }
+The main static class to load the configuration file (yaml)
+</code></pre>
+<h2 id="ConsulCon">ConsulCon<a class="anchor-link" href="#ConsulCon">&#182;</a></h2>
+<pre><code>{ from outfit import ConsulCon }
+Consul class to load key value class
+</code></pre>
+<h2 id="VaultCon">VaultCon<a class="anchor-link" href="#VaultCon">&#182;</a></h2>
+<pre><code>{ from outfit import VaultCon }
+Consul class to load the secret data</code></pre>
+
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
